@@ -1,0 +1,20 @@
+{
+  "todo": {
+    "prefix": [
+      "todo"
+    ],
+    "body": [
+      "// TODO: $1"
+    ],
+    "description": "Todo comment"
+  },
+  "fixme": {
+    "prefix": [
+      "fixme"
+    ],
+    "body": [
+      "// FIXME: $1"
+    ],
+    "description": "Fixme comment"
+  }
+}

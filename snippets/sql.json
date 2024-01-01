@@ -1,0 +1,23 @@
+{
+  "todo": {
+    "prefix": ["todo"],
+    "body": ["-- TODO: $1"],
+    "description": "Todo comment"
+  },
+  "Create index": {
+    "prefix": ["createi"],
+    "body": ["CREATE INDEX $1_$2_idx ON $3($4);"]
+  },
+  "Constraint unique": {
+    "prefix": ["cunique"],
+    "body": ["CONSTRAINT $1_$2_$3_unq UNIQUE($4)"]
+  },
+  "Title comment": {
+    "prefix": ["title"],
+    "body": ["-- ## $1 ## --"]
+  },
+  "Schema": {
+    "prefix": ["schema"],
+    "body": ["CREATE SCHEMA $1"]
+  }
+}
