@@ -15,7 +15,6 @@ return {
         "marksman",
         "jsonls",
         "sqlls",
-        "tsserver",
         "yamlls",
         -- add more arguments for adding more language servers
       })
