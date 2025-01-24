@@ -22,10 +22,10 @@ return {
         enabled = true, -- enable or disable format on save globally
         allow_filetypes = { -- enable format on save for specified filetypes only
           "markdown",
-          -- "go",
+          "go",
+          "python",
         },
         ignore_filetypes = { -- disable format on save for specified filetypes
-          -- "python",
         },
       },
       disabled = { -- disable formatting capabilities for the listed language servers
@@ -33,9 +33,10 @@ return {
         -- "lua_ls",
       },
       timeout_ms = 1000, -- default format timeout
-      -- filter = function(client) -- fully override the default formatting function
-      --   return true
-      -- end
+      filter = function(client) -- fully override the default formatting function
+        client.attached_buffers.
+        return true
+      end
     },
     -- enable servers that you already have installed without mason
     servers = {
@@ -45,6 +46,7 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      
     },
     -- customize how language servers are attached
     handlers = {
