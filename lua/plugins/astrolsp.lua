@@ -34,9 +34,8 @@ return {
       },
       timeout_ms = 1000, -- default format timeout
       filter = function(client) -- fully override the default formatting function
-        client.attached_buffers.
         return true
-      end
+      end,
     },
     -- enable servers that you already have installed without mason
     servers = {
@@ -46,7 +45,6 @@ return {
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
-      
     },
     -- customize how language servers are attached
     handlers = {
