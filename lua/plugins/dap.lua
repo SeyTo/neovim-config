@@ -5,61 +5,14 @@ return {
     dependencies = {
       { "theHamsta/nvim-dap-virtual-text", config = true },
       { "mxsdev/nvim-dap-vscode-js", opts = { debugger_cmd = { "js-debug-adapter" }, adapters = { "pwa-node" } } },
+      { "leoluz/nvim-dap-go" },
     },
     config = function()
       local dap = require "dap"
       dap.defaults.fallback.external_terminal = {
         command = "/usr/bin/alacritty",
-        args    = { "-e" }            ,
+        args = { "-e" },
       }
-      dap.configurations.python = {
-        { -- The first three options are required by nvim-dap
-          type       = "python"                            , -- the type here established the link to the adapter definition : `dap.adapters.python`
-          request    = "launch"                            ,
-          name       = "Launch file in external terminal"  ,
-          console    = "externalTerminal"                  , -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-          program    = "${file}"                           , -- This configuration will launch the current file if used.
-          pythonPath = "/usr/bin/python"
-        },
-        { -- The first three options are required by nvim-dap
-          type       = "python"                            , -- the type here established the link to the adapter definition : `dap.adapters.python`
-          request    = "launch"                            ,
-          name       = "Launch file in integrated terminal",
-          console    = "integratedTerminal"                , -- Options here and  below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-          program    = "${file}"                           , -- This configuration will launch the current file if used.
-          pythonPath = "/usr/bin/python"
-      },}
-      -- dap.adapters.python = {
-      --   type = "executable",
-      --   command = "/opt/.virtualenvs/debugpy/bin/python",
-      --   args = { "-m", "debugpy.adapter" },
-      -- }
-
-      -- dap.configurations.python = {
-      --   {
-      --     -- The first three options are required by nvim-dap
-      --     type = "python", -- the type here established the link to the adapter definition: `dap.adapters.python`
-      --     request = "launch",
-      --     name = "Launch file",
-      --
-      --     -- Options below are for debugpy, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings for supported options
-      --
-      --     program = "${file}", -- This configuration will launch the current file if used.
-      --     pythonPath = function()
-      --       -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
-      --       -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
-      --       -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
-      --       local cwd = vim.fn.getcwd()
-      --       if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-      --         return cwd .. "/venv/bin/python"
-      --       elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-      --         return cwd .. "/.venv/bin/python"
-      --       else
-      --         return "/usr/bin/python"
-      --       end
-      --     end,
-      --   },
-      -- }
 
       local attach_node = {
         type = "node",
@@ -102,6 +55,7 @@ return {
       }
 
       -- go
+      require("dap-go").setup()
       dap.configurations.go = {
         {
           name = "Debug (dlv)",
@@ -116,23 +70,19 @@ return {
             args = { "dap", "-l", "127.0.0.1:${port}" },
           },
         },
-      }
-
-      dap.configurations.go = {
         {
+          name = "Attach",
           type = "go",
-          name = "Debug",
-          request = "launch",
-          mode = "debug",
-          program = "main.go",
-          args = {
-            "start",
-          },
+          request = "attach",
+          mode = "remote",
+          processId = require("dap.utils").pick_process,
+          port = 40000,
         },
         {
-          type = "delve",
-          name = "Debug (delve)",
+          name = "Debug",
+          type = "go",
           request = "launch",
+          mode = "debug",
           program = "main.go",
           args = {
             "start",
@@ -141,8 +91,8 @@ return {
           },
         },
         {
-          type = "delve",
           name = "Debug test", -- configuration for debugging test files
+          type = "delve",
           request = "launch",
           mode = "test",
           program = "${file}",
@@ -161,60 +111,58 @@ return {
   {
     "jay-babu/mason-nvim-dap.nvim",
     opts = {
+      ensure_installed = { "python" },
       handlers = {
-        python = function(source_name)
-          -- local dap = require "dap"
-          -- dap.adapters.python = {
-          --   request = "attach",
-          --   type = "node",
-          --   cwd = "${workspaceFolder}",
-          --   port = "${port}",
-          --   -- command = "debugpy",
-          --   -- args = {
-          --   --   "-m",
-          --   --   "debugpy.adapter",
-          --   -- },
-          -- }
+        python = function()
+          local dap = require "dap"
+          -- local cwd = vim.fn.getcwd()
+          dap.adapters.python = {
+            type = "executable",
+            cwd = "${workspaceFolder}",
+            port = "${port}",
+            command = "./.venv/bin/python",
+            -- command = cwd .. "/.venv/bin/python",
+            args = {
+              "-m",
+              "debugpy.adapter",
+            },
+            -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+          }
 
-          -- dap.configurations.python = {
-          --   {
-          --     type = "python",
-          --     request = "launch",
-          --     name = "Launch file",
-          --     program = "${file}", -- This configuration will launch the current file if used.
-          --   },
-          -- }
+          dap.configurations.python = {
+            {
+              type = "python",
+              request = "launch",
+              name = "Launch file",
+              program = "${file}", -- This configuration will launch the current file if used.
+              pythonPath = function()
+                -- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
+                -- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
+                -- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
+                local cwd = vim.fn.getcwd()
+                if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
+                  return cwd .. "/venv/bin/python"
+                elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
+                  return cwd .. "/.venv/bin/python"
+                else
+                  return "/usr/bin/python"
+                end
+              end,
+            },
+            {
+              type = "python",
+              request = "attach",
+              name = "Attach to Debugpy",
+              connect = {
+                host = "127.0.0.1", -- Adjust if needed
+                port = 5678, -- Default debugpy port
+              },
+              mode = "client",
+            },
+          }
         end,
       },
     },
-  },
-  {
-    "mfussenegger/nvim-dap-python",
-    config = function()
-      require("dap-python").setup ".venv/bin/python"
-      local dap = require "dap"
-      dap.configurations.python = {
-        {
-          type = "python",
-          request = "launch",
-          name = "My custom launch configuration",
-          program = "${file}",
-          -- ... more options, see https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
-        },
-      }
-      -- require("dap").configurations.python = {
-      --   {
-      --     type = "python",
-      --     request = "attach",
-      --     name = "Attach to Debugpy",
-      --     connect = {
-      --       host = "127.0.0.1", -- Adjust if needed
-      --       port = 5678, -- Default debugpy port
-      --     },
-      --     mode = "client",
-      --   },
-      -- }
-    end,
   },
 }
 -- "mfussenegger/nvim-dap",
@@ -266,62 +214,6 @@ return {
 --         },
 --       },
 --       attach_node,
---     }
---
---     -- go
---     dap.configurations.go = {
---       {
---         name = "Debug (dlv)",
---         request = "launch",
---         options = {
---           initialize_timeout_sec = 20,
---         },
---         type = "server",
---         port = "${port}",
---         executable = {
---           command = "dlv",
---           args = { "dap", "-l", "127.0.0.1:${port}" },
---         },
---       },
---     }
---
---     dap.configurations.go = {
---       {
---         type = "go",
---         name = "Debug",
---         request = "launch",
---         mode = "debug",
---         program = "main.go",
---         args = {
---           "start",
---         },
---       },
---       {
---         type = "delve",
---         name = "Debug (delve)",
---         request = "launch",
---         program = "main.go",
---         args = {
---           "start",
---           -- "--env",
---           -- ".env",
---         },
---       },
---       {
---         type = "delve",
---         name = "Debug test", -- configuration for debugging test files
---         request = "launch",
---         mode = "test",
---         program = "${file}",
---       },
---       -- works with go.mod packages and sub packages
---       {
---         type = "delve",
---         name = "Debug test (go.mod)",
---         request = "launch",
---         mode = "test",
---         program = "./${relativeFileDirname}",
---       },
 --     }
 --   end,
 --
