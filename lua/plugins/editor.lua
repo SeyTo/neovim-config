@@ -9,7 +9,7 @@ return {
         height = 0.9,
         options = {
           number = false,
-          relativenumber = false,
+          relativenumber = true,
           foldcolumn = "0",
           list = false,
           showbreak = "NONE",
