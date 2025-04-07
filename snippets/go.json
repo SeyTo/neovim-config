@@ -197,7 +197,14 @@
     "prefix": "enum",
     "body": [
       "type ${1:varName} int",
-      "const (\n${2:constName} ${1:varName} = iota\n)"
+      "",
+      "const (\n${2:constName} ${1:varName} = iota\n)",
+      "",
+      "var ${3:mappedVar} = map[$1]string{ $4: \"$5\"}",
+      "",
+      "func (s $1) String() string {",
+      "  return $3[s]",
+      "}"
     ]
   },
   "Use DB context": {
