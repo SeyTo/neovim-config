@@ -67,6 +67,7 @@ return {
         ["<Leader>z"] = { "<cmd>ZenMode<cr>", desc = "Zen Mode" },
         ["<Leader>N"] = { "<cmd>tabnew<cr>", desc = "New Tab" },
         ["<Leader>s"] = { desc = "Spectre" },
+        ["<Leader>H"] = { desc = "Harpoon" },
         ["<Leader>sr"] = { '<cmd>lua require("spectre").toggle()<CR>', desc = "Toggle Spectre" },
         ["<Leader>sw"] = {
           '<cmd>lua require("spectre").open_visual({select_word=true})<CR>',
