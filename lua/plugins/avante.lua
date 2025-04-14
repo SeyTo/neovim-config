@@ -1,157 +1,73 @@
 return {
-  -- { "yetone/avante.nvim", event = "VeryLazy", lazy = false, version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes. opts = { -- add any opts here provider = "ollama", tokenizer = "tiktoken", ollama = {
-  --       endpoint = "http://localhost:11434/api/generate",
-  --       model = "deepseek-r1:7b",
-  --       timeout = 30000, -- Timeout in milliseconds
-  --       temperature = 0,
-  --       max_tokens = 8000,
-  --     },
-  --     -- claude = {
-  --     --   endpoint = "https://api.anthropic.com",
-  --     --   model = "claude-3-5-sonnet-20241022",
-  --     --   timeout = 30000, -- Timeout in milliseconds
-  --     --   temperature = 0,
-  --     --   max_tokens = 8000,
-  --     -- },
-  --     dual_boost = {
-  --       enabled = false,
-  --       first_provider = "ollama",
-  --       second_provider = "claude",
-  --       prompt = "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
-  --       timeout = 60000, -- Timeout in milliseconds
-  --     },
-  --     behaviour = {
-  --       auto_focus_sidebar = true,
-  --       auto_suggestions = false, -- Experimental stage
-  --       auto_suggestions_respect_ignore = false,
-  --       auto_set_highlight_group = true,
-  --       auto_set_keymaps = true,
-  --       auto_apply_diff_after_generation = false,
-  --       jump_result_buffer_on_finish = false,
-  --       support_paste_from_clipboard = false,
-  --       minimize_diff = true,
-  --     },
-  --     mappings = {
-  --       --- @class AvanteConflictMappings
-  --       diff = {
-  --         ours = "co",
-  --         theirs = "ct",
-  --         all_theirs = "ca",
-  --         both = "cb",
-  --         cursor = "cc",
-  --         next = "]x",
-  --         prev = "[x",
-  --       },
-  --       suggestion = {
-  --         accept = "<M-l>",
-  --         next = "<M-]>",
-  --         prev = "<M-[>",
-  --         dismiss = "<C-]>",
-  --       },
-  --       jump = {
-  --         next = "]]",
-  --         prev = "[[",
-  --       },
-  --       submit = {
-  --         normal = "<CR>",
-  --         insert = "<C-s>",
-  --       },
-  --       sidebar = {
-  --         apply_all = "A",
-  --         apply_cursor = "a",
-  --         switch_windows = "<Tab>",
-  --         reverse_switch_windows = "<S-Tab>",
-  --       },
-  --     },
-  --     hints = { enabled = true },
-  --     windows = {
-  --       ---@type "right" | "left" | "top" | "bottom"
-  --       position = "right", -- the position of the sidebar
-  --       wrap = true, -- similar to vim.o.wrap
-  --       width = 30, -- default % based on available width
-  --       sidebar_header = {
-  --         enabled = true, -- true, false to enable/disable the header
-  --         align = "center", -- left, center, right for title
-  --         rounded = true,
-  --       },
-  --       input = {
-  --         prefix = "> ",
-  --         height = 8, -- Height of the input window in vertical layout
-  --       },
-  --       edit = {
-  --         border = "rounded",
-  --         start_insert = true, -- Start insert mode when opening the edit window
-  --       },
-  --       ask = {
-  --         floating = false, -- Open the 'AvanteAsk' prompt in a floating window
-  --         start_insert = true, -- Start insert mode when opening the ask window
-  --         border = "rounded",
-  --         ---@type "ours" | "theirs"
-  --         focus_on_apply = "ours", -- which diff to focus after applying
-  --       },
-  --     },
-  --     highlights = {
-  --       ---@type AvanteConflictHighlights
-  --       diff = {
-  --         current = "DiffText",
-  --         incoming = "DiffAdd",
-  --       },
-  --     },
-  --     --- @class AvanteConflictUserConfig
-  --     diff = {
-  --       autojump = true,
-  --       ---@type string | fun(): any
-  --       list_opener = "copen",
-  --       --- Override the 'timeoutlen' setting while hovering over a diff (see :help timeoutlen).
-  --       --- Helps to avoid entering operator-pending mode with diff mappings starting with `c`.
-  --       --- Disable by setting to -1.
-  --       override_timeoutlen = 500,
-  --     },
-  --     suggestion = {
-  --       debounce = 600,
-  --       throttle = 600,
-  --     },
-  --     -- sk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAAsk-ant-api03-10hRfYkKQw4R_8swvMg5Me3W3Jju7GsCuPArF1psQXkUVer79oISjUlMYCqrcrhVzGMqyyVr8EgljpC2XAyikw-t8pTTwAA
-  --   },
-  --   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  --   build = "make",
-  --   -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-  --   dependencies = {
-  --     "stevearc/dressing.nvim",
-  --     "nvim-lua/plenary.nvim",
-  --     "MunifTanjim/nui.nvim",
-  --     --- The below dependencies are optional,
-  --     "echasnovski/mini.pick", -- for file_selector provider mini.pick
-  --     "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-  --     "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-  --     "ibhagwan/fzf-lua", -- for file_selector provider fzf
-  --     "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-  --     -- "zbirenbaum/copilot.lua", -- for providers='copilot'
-  --     {
-  --       -- support for image pasting
-  --       "HakonHarnes/img-clip.nvim",
-  --       event = "VeryLazy",
-  --       opts = {
-  --         -- recommended settings
-  --         default = {
-  --           embed_image_as_base64 = false,
-  --           prompt_for_file_name = false,
-  --           drag_and_drop = {
-  --             insert_mode = true,
-  --           },
-  --           -- required for Windows users
-  --           use_absolute_path = true,
-  --         },
-  --       },
-  --     },
-  --     {
-  --       -- Make sure to set this up properly if you have lazy=true
-  --       "MeanderingProgrammer/render-markdown.nvim",
-  --       opts = {
-  --         file_types = { "markdown", "Avante" },
-  --       },
-  --       ft = { "markdown", "Avante" },
-  --     },
-  --   },
-  -- },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    version = false, -- Never set this value to "*"! Never!
+    opts = {
+      provider = "ollama",
+      ollama = {
+        model = "deepseek-r1:14b", -- your desired model (or use gpt-4o, etc.)
+      },
+      -- openai = {
+      --   endpoint = "http://localhost:11434",
+      --   timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
+      --   temperature = 0,
+      --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+      --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+      -- },
+      behaviour = {
+        --- ... existing behaviours
+        enable_cursor_planning_mode = true, -- enable cursor planning mode!
+      },
+    },
+    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+    build = "make",
+    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+    rag_service = {
+      enabled = true, -- Enables the RAG service
+      host_mount = os.getenv "HOME", -- Host mount path for the rag service
+      provider = "ollama", -- The provider to use for RAG service (e.g. openai or ollama)
+      llm_model = "deepseek-r1:14b", -- The LLM model to use for RAG service
+      embed_model = "", -- The embedding model to use for RAG service
+      endpoint = "http://localhost:11434", -- The API endpoint for RAG service
+    },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      --- The below dependencies are optional,
+      "echasnovski/mini.pick", -- for file_selector provider mini.pick
+      "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      -- "zbirenbaum/copilot.lua", -- for providers='copilot'
+      {
+        -- support for image pasting
+        "HakonHarnes/img-clip.nvim",
+        event = "VeryLazy",
+        opts = {
+          -- recommended settings
+          default = {
+            embed_image_as_base64 = false,
+            prompt_for_file_name = false,
+            drag_and_drop = {
+              insert_mode = true,
+            },
+            -- required for Windows users
+            use_absolute_path = true,
+          },
+        },
+      },
+      {
+        -- Make sure to set this up properly if you have lazy=true
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          file_types = { "markdown", "Avante" },
+        },
+        ft = { "markdown", "Avante" },
+      },
+    },
+  },
 }
