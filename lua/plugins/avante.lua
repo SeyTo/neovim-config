@@ -6,7 +6,7 @@ return {
     opts = {
       provider = "ollama",
       ollama = {
-        model = "deepseek-r1:14b", -- your desired model (or use gpt-4o, etc.)
+        model = "llama3.1:8b", -- your desired model (or use gpt-4o, etc.)
       },
       -- openai = {
       --   endpoint = "http://localhost:11434",
@@ -27,7 +27,7 @@ return {
       enabled = true, -- Enables the RAG service
       host_mount = os.getenv "HOME", -- Host mount path for the rag service
       provider = "ollama", -- The provider to use for RAG service (e.g. openai or ollama)
-      llm_model = "deepseek-r1:14b", -- The LLM model to use for RAG service
+      llm_model = "llama3.1:8b", -- The LLM model to use for RAG service
       embed_model = "", -- The embedding model to use for RAG service
       endpoint = "http://localhost:11434", -- The API endpoint for RAG service
     },

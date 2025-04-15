@@ -1,5 +1,5 @@
 return {
-  { "jose-elias-alvarez/typescript.nvim", lazy = true }, -- add lsp plugin
+  -- { "jose-elias-alvarez/typescript.nvim", lazy = true }, -- add lsp plugin
   {
     "AstroNvim/astrolsp",
     ---@type AstroLSPOpts
@@ -14,7 +14,7 @@ return {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     opts = {
       ensure_installed = {
-        -- "typescript-language-server",
+        "typescript-language-server",
         "yaml-language-server",
         "bash-debug-adapter",
         "css-lsp",
