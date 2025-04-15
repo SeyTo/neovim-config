@@ -6,5 +6,17 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.lua" },
+  { import = "astrocommunity.pack.go" },
+  { import = "astrocommunity.pack.python" },
+  { import = "astrocommunity.pack.bash" },
+  { import = "astrocommunity.pack.docker" },
+  { import = "astrocommunity.pack.markdown" },
+  { import = "astrocommunity.pack.sql" },
+  { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.project.projectmgr-nvim" },
+  { import = "astrocommunity.remote-development.remote-sshfs-nvim" },
+  { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
+  { import = "astrocommunity.debugging.telescope-dap-nvim" },
+  { import = "astrocommunity.debugging.persistent-breakpoints-nvim" },
   -- import/override with your plugins folder
 }
