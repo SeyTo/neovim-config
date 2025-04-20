@@ -13,5 +13,15 @@
     "prefix": ["impo"],
     "body": ["import $2 from '$1';"],
     "description": "Import statement"
+  },
+  "here": {
+    "prefix": ["here"],
+    "body": ["console.log('here');"],
+    "description": "Here log"
+  },
+  "logu": {
+    "prefix": ["logu"],
+    "body": ["console.log($1);"],
+    "description": "Log"
   }
 }
