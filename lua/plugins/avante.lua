@@ -5,9 +5,25 @@ return {
     version = false, -- Never set this value to "*"! Never!
     opts = {
       provider = "ollama",
-      ollama = {
-        model = "llama3.1:8b", -- your desired model (or use gpt-4o, etc.)
+      providers = {
+        ollama = {
+          endpoint = "http://localhost:11434",
+          model = "qwen3:latest", -- your desired model (or use gpt-4o, etc.)
+        },
+        mistral = {
+          __inherited_from = "openai",
+          api_key_name = "MISTRAL_API_KEY",
+          endpoint = "https://api.mistral.ai/v1/",
+          model = "mistral-large-latest",
+          extra_request_body = {
+            max_tokens = 4096, -- to avoid using max_completion_tokens
+          },
+        },
+        aihubmix = {
+          model = "gpt-4o-2024-11-20",
+        },
       },
+
       -- openai = {
       --   endpoint = "http://localhost:11434",
       --   timeout = 30000, -- Timeout in milliseconds, increase this for reasoning models
@@ -27,9 +43,13 @@ return {
       enabled = true, -- Enables the RAG service
       host_mount = os.getenv "HOME", -- Host mount path for the rag service
       provider = "ollama", -- The provider to use for RAG service (e.g. openai or ollama)
-      llm_model = "llama3.1:8b", -- The LLM model to use for RAG service
+      llm_model = "qwen3:latest", -- The LLM model to use for RAG service
       embed_model = "", -- The embedding model to use for RAG service
       endpoint = "http://localhost:11434", -- The API endpoint for RAG service
+    },
+    web_search_engine = {
+      provider = "tavily", -- tavily, serpapi, searchapi, google, kagi, brave, or searxng
+      proxy = nil, -- proxy support, e.g., http://127.0.0.1:7890
     },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
