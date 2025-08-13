@@ -17,7 +17,7 @@ return {
   { import = "astrocommunity.pack.markdown" },
   { import = "astrocommunity.pack.sql" },
   { import = "astrocommunity.pack.typescript" },
-  { import = "astrocommunity.completion.copilot-lua-cmp" },
+  { import = "astrocommunity.completion.copilot-lua-cmp", enabled = false },
   -- { import = "astrocommunity.completion.codeium-nvim" },
   -- { import = "astrocommunity.remote-development.remote-sshfs-nvim" },
   { import = "astrocommunity.debugging.nvim-dap-virtual-text" },
