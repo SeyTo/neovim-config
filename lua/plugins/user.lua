@@ -1,12 +1,5 @@
--- You can also add or configure plugins by creating files in this `plugins/` folder
--- PLEASE REMOVE THE EXAMPLES YOU HAVE NO INTEREST IN BEFORE ENABLING THIS FILE
--- Here are some examples:
-
 ---@type LazySpec
 return {
-
-  -- == Examples of Adding Plugins ==
-
   "andweeb/presence.nvim",
   {
     "ray-x/lsp_signature.nvim",
@@ -14,9 +7,6 @@ return {
     config = function() require("lsp_signature").setup() end,
   },
 
-  -- == Examples of Overriding Plugins ==
-
-  -- customize dashboard options
   {
     "folke/snacks.nvim",
     opts = {
@@ -59,7 +49,9 @@ return {
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       -- local luasnip = require "luasnip"
       -- luasnip.filetype_extend("javascript", { "javascriptreact" })
-      require("luasnip.loaders.from_vscode").lazy_load { paths = { "/home/rj/.config/VSCodium/User/snippets", vim.fn.stdpath "config" .. "/snippets" } }
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = { "/home/rj/.config/VSCodium/User/snippets", vim.fn.stdpath "config" .. "/snippets" },
+      }
     end,
   },
 
@@ -92,5 +84,4 @@ return {
       )
     end,
   },
-  
 }

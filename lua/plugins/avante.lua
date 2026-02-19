@@ -1,27 +1,50 @@
+if true then return {} end
+
 return {
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "ollama",
+      instructions_file = "CLAUDE.md",
+      provider = "claude",
+      -- provider = "ollama",
       providers = {
-        ollama = {
-          endpoint = "http://localhost:11434",
-          model = "qwen3:latest", -- your desired model (or use gpt-4o, etc.)
-        },
-        mistral = {
-          __inherited_from = "openai",
-          api_key_name = "MISTRAL_API_KEY",
-          endpoint = "https://api.mistral.ai/v1/",
-          model = "mistral-large-latest",
+        claude = {
+          endpoint = "https://api.anthropic.com",
+          model = "claude-sonnet-4-6",
+          timeout = 30000, -- Timeout in milliseconds
+          auth_type = "max",
           extra_request_body = {
-            max_tokens = 4096, -- to avoid using max_completion_tokens
+            temperature = 0.75,
+            max_tokens = 20480,
           },
         },
-        aihubmix = {
-          model = "gpt-4o-2024-11-20",
-        },
+        -- moonshot = {
+        --   endpoint = "https://api.moonshot.ai/v1",
+        --   model = "kimi-k2-0711-preview",
+        --   timeout = 30000, -- Timeout in milliseconds
+        --   extra_request_body = {
+        --     temperature = 0.75,
+        --     max_tokens = 32768,
+        --   },
+        -- },
+        -- ollama = {
+        --   endpoint = "http://localhost:11434",
+        --   model = "qwen3:latest", -- your desired model (or use gpt-4o, etc.)
+        -- },
+        --   mistral = {
+        --     __inherited_from = "openai",
+        --     api_key_name = "MISTRAL_API_KEY",
+        --     endpoint = "https://api.mistral.ai/v1/",
+        --     model = "mistral-large-latest",
+        --     extra_request_body = {
+        --       max_tokens = 4096, -- to avoid using max_completion_tokens
+        --     },
+        --   },
+        -- aihubmix = {
+        --   model = "gpt-4o-2024-11-20",
+        -- },
       },
 
       -- openai = {
@@ -31,6 +54,9 @@ return {
       --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
       --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
       -- },
+      input = {
+        provider = "snacks", -- workaround: native provider broken by commit 9b72d16
+      },
       behaviour = {
         --- ... existing behaviours
         enable_cursor_planning_mode = true, -- enable cursor planning mode!
@@ -52,16 +78,13 @@ return {
       proxy = nil, -- proxy support, e.g., http://127.0.0.1:7890
     },
     dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "stevearc/dressing.nvim",
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
-      "echasnovski/mini.pick", -- for file_selector provider mini.pick
       "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-      "ibhagwan/fzf-lua", -- for file_selector provider fzf
-      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      -- "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
+      -- "ibhagwan/fzf-lua", -- for file_selector provider fzf
+      -- "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
       -- "zbirenbaum/copilot.lua", -- for providers='copilot'
       {
         -- support for image pasting

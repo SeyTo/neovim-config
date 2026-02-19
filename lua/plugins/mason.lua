@@ -26,7 +26,7 @@ return {
         -- install any other package
         "tree-sitter-cli",
         "stylua",
-        "eslint_d",
+        -- "eslint_d",
         "jsonlint",
         "quick-lint-js",
         "fixjson",
