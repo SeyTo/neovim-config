@@ -33,6 +33,8 @@ return {
         "prettierd",
         -- "luacheck",
         "markdownlint",
+        -- "python-language-server",
+        -- "ruff",
       },
     },
   },

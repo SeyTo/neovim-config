@@ -1,4 +1,4 @@
-if true then return {} end
+-- if true then return {} end
 
 return {
   {
@@ -10,16 +10,16 @@ return {
       provider = "claude",
       -- provider = "ollama",
       providers = {
-        claude = {
-          endpoint = "https://api.anthropic.com",
-          model = "claude-sonnet-4-6",
-          timeout = 30000, -- Timeout in milliseconds
-          auth_type = "max",
-          extra_request_body = {
-            temperature = 0.75,
-            max_tokens = 20480,
-          },
-        },
+        -- claude = {
+        --   endpoint = "https://api.anthropic.com",
+        --   model = "claude-sonnet-4-6",
+        --   timeout = 30000, -- Timeout in milliseconds
+        --   auth_type = "max",
+        --   extra_request_body = {
+        --     temperature = 0.75,
+        --     max_tokens = 20480,
+        --   },
+        -- },
         -- moonshot = {
         --   endpoint = "https://api.moonshot.ai/v1",
         --   model = "kimi-k2-0711-preview",
@@ -29,10 +29,11 @@ return {
         --     max_tokens = 32768,
         --   },
         -- },
-        -- ollama = {
-        --   endpoint = "http://localhost:11434",
-        --   model = "qwen3:latest", -- your desired model (or use gpt-4o, etc.)
-        -- },
+        ollama = {
+          endpoint = "http://localhost:11434",
+          model = "gpt-oss:latest", -- your desired model (or use gpt-4o, etc.)
+          disable_tools = true,
+        },
         --   mistral = {
         --     __inherited_from = "openai",
         --     api_key_name = "MISTRAL_API_KEY",

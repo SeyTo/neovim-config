@@ -68,10 +68,10 @@ return {
     end,
   },
   {
-    "ggandor/leap.nvim",
+    url = "https://codeberg.org/andyg/leap.nvim",
     dependencies = {
       { "tpope/vim-repeat" },
     },
-    config = function(plugin, opts) require("leap").create_default_mappings() end,
+    -- config = function(plugin, opts) require("leap").create_default_mappings() end,
   },
 }
