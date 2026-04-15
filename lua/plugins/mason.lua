@@ -11,7 +11,7 @@ return {
         "lua-language-server",
         "gopls",
         "marksman",
-        "sqlls",
+        "sqls",
         -- install formatters
         "stylua",
         "yaml-language-server",
