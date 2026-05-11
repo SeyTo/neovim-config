@@ -21,12 +21,11 @@ return {
         -- install debuggers
         "debugpy",
         "delve",
-        "chrome-debug-adapter",
-        "node-debug2-adapter",
         -- install any other package
         "tree-sitter-cli",
         "stylua",
         -- "eslint_d",
+        "biome",
         "jsonlint",
         "quick-lint-js",
         "fixjson",
