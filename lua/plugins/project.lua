@@ -1,11 +1,11 @@
 return {
-  'stevearc/overseer.nvim',
+  "stevearc/overseer.nvim",
   opts = {
     task_list = {
       direction = "bottom",
       min_height = 25,
       max_height = 25,
-      default_detail = 1
+      default_detail = 1,
     },
     templates = {
       "builtin",
@@ -13,14 +13,14 @@ return {
     },
   },
   config = function(_, opts)
-    local overseer = require("overseer")
+    local overseer = require "overseer"
     overseer.setup(opts)
-    
+
     -- Register custom task template
-    overseer.register_template({
+    overseer.register_template {
       name = "run_script",
       builder = function()
-        local file = vim.fn.expand("%:p")
+        local file = vim.fn.expand "%:p"
         local cmd, args
         if vim.bo.filetype == "javascript" then
           cmd, args = "node", { file }
@@ -36,7 +36,7 @@ return {
           vim.notify("Unsupported filetype: " .. vim.bo.filetype, vim.log.levels.ERROR)
           return nil
         end
-        
+
         return {
           cmd = cmd,
           args = args,
@@ -46,6 +46,6 @@ return {
       condition = {
         filetype = { "javascript", "python", "lua", "rust", "go" },
       },
-    })
-  end
+    }
+  end,
 }
