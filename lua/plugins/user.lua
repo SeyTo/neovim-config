@@ -64,6 +64,12 @@ return {
     end,
   },
 
+  -- sqls not loaded
+  {
+    "nanotee/sqls.nvim",
+    ft = "sql",
+  },
+
   {
     "windwp/nvim-autopairs",
     config = function(plugin, opts)
