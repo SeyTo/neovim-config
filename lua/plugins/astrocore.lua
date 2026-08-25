@@ -92,6 +92,16 @@ return {
           '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>',
           desc = "Search in file",
         },
+        ["<Leader>gd"] = { "<Cmd>DiffviewOpen<CR>", desc = "Diffview (working tree)" },
+        ["<Leader>gD"] = {
+          function()
+            vim.ui.input({ prompt = "Diff against branch: ", default = "main" }, function(b)
+              if b and b ~= "" then vim.cmd("DiffviewOpen " .. b .. "...HEAD") end
+            end)
+          end,
+          desc = "Diffview vs branch",
+        },
+        ["<Leader>gh"] = { "<Cmd>DiffviewFileHistory %<CR>", desc = "File history" },
       },
     },
     autocmds = {
