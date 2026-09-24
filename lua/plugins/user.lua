@@ -64,10 +64,41 @@ return {
     end,
   },
 
-  -- sqls not loaded
+  -- sqls.nvim was rewritten for nvim 0.11: it ships `lsp/sqls.lua` (auto-discovered
+  -- on the runtimepath) and no longer exposes `require("sqls").on_attach`.
+  -- Load eagerly so nvim finds `lsp/sqls.lua` when it resolves the server config.
   {
     "nanotee/sqls.nvim",
-    ft = "sql",
+    lazy = false,
+  },
+
+  -- astrocommunity's sql pack sets `config.sqls.on_attach` to disable formatting,
+  -- which force-merges *over* the on_attach in sqls.nvim's own `lsp/sqls.lua` and
+  -- so the buffer-local :Sqls* commands never get created. Do both jobs here.
+  {
+    "AstroNvim/astrolsp",
+    opts = {
+      config = {
+        sqls = {
+          on_attach = function(client, bufnr)
+            -- upstream bug: https://github.com/sqls-server/sqls/issues/149
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+
+            -- nvim-lspconfig also ships an `lsp/sqls.lua` and wins the runtimepath
+            -- lookup, so pick sqls.nvim's copy explicitly -- it is the one whose
+            -- on_attach creates the buffer-local :Sqls* commands.
+            for _, spec_file in ipairs(vim.api.nvim_get_runtime_file("lsp/sqls.lua", true)) do
+              if spec_file:find("sqls.nvim", 1, true) then
+                local ok, spec = pcall(dofile, spec_file)
+                if ok and type(spec) == "table" and spec.on_attach then spec.on_attach(client, bufnr) end
+                break
+              end
+            end
+          end,
+        },
+      },
+    },
   },
 
   {

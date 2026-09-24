@@ -102,9 +102,43 @@ return {
           desc = "Diffview vs branch",
         },
         ["<Leader>gh"] = { "<Cmd>DiffviewFileHistory %<CR>", desc = "File history" },
+
+        ["<Leader>uW"] = {
+          function()
+            if vim.bo.filetype ~= "markdown" then
+              vim.notify("Markdown hard-wrap toggle only applies to markdown files", vim.log.levels.WARN)
+              return
+            end
+            local enabled = vim.opt_local.textwidth:get() > 0
+            vim.opt_local.textwidth = enabled and 0 or 80
+            vim.notify(("Markdown hard-wrap %s"):format(enabled and "disabled" or "enabled"))
+          end,
+          desc = "Toggle markdown hard-wrap (auto newline at textwidth)",
+        },
+        ["<Leader>uR"] = {
+          function()
+            if vim.bo.filetype ~= "markdown" then
+              vim.notify("Markdown reflow only applies to markdown files", vim.log.levels.WARN)
+              return
+            end
+            local tw = vim.opt_local.textwidth:get()
+            if tw <= 0 then
+              vim.notify("Enable hard-wrap first with <Leader>uW before reflowing", vim.log.levels.WARN)
+              return
+            end
+            local view = vim.fn.winsaveview()
+            vim.cmd "normal! gggqG"
+            vim.fn.winrestview(view)
+            vim.notify(("Reflowed buffer to textwidth=%d"):format(tw))
+          end,
+          desc = "Reflow markdown buffer to textwidth",
+        },
       },
     },
     autocmds = {
+      -- astrocommunity's sql pack calls require("sqls").on_attach, an API removed
+      -- when sqls.nvim was rewritten for nvim 0.11. Disable the stale autocmd.
+      sqls_attach = false,
       restore_session = {
         {
           event = "VimEnter",
